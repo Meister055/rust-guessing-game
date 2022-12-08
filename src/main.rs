@@ -2,13 +2,18 @@ use std::io;
 use rand::Rng;
 use std::cmp::Ordering;
 
-fn main() {
-    let num = rand::thread_rng().gen_range(1..=10);
+const MIN: u32 = 1;
+const MAX: u32 = 10;
 
-    println!("The number is {num}.");
-    let mut i: i32 = 0;
-    while i < 5 {
-        println!("Input a guess: ");
+fn main() {
+    let num = rand::thread_rng().gen_range(MIN..=MAX);
+
+    let max_guesses = 5;
+    let mut i = 0;
+    while i < max_guesses {
+        let guesses_left = max_guesses - i;
+        println!("Guess a number between {MIN} and {MAX}.");
+        println!("You have {guesses_left} guesses left. Input a guess: ");
 
         let mut guess = String::new();
 
@@ -21,8 +26,6 @@ fn main() {
             Err(_) => continue,
         };
 
-        println!("The guess is {guess}.");
-
         match guess.cmp(&num) {
             Ordering::Less => {
                 println!("That guess is too small");
@@ -33,9 +36,13 @@ fn main() {
                 i += 1;
             }
             Ordering::Equal => {
-                println!("You win!");
+                i += 1;
+                println!("You win! The number was {num} and you got it in {i} guesses");
                 break;
             }
         }
+    }
+    if i == 5{
+        println!("Out of guesses! The number was {num}.");
     }
 }
