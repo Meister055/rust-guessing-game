@@ -48,4 +48,10 @@ fn main() {
     if i == 5{
         println!("Out of guesses! The number was {num}.");
     }
+
+    println!("Press enter to exit.");
+
+    let mut exit = String::new();
+    io::stdin().read_line(&mut exit).expect("Failed to read line");
+
 }
